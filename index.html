@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Letter Composing</title>
+		<link rel="stylesheet" type="text/css" href="dist/letterwriter_min.css" />
+	</head>
+	<body>
+		<div class="container" id="app" v-cloak>
+			<div id="sidebar">
+				<svg viewbox="0 0 32 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.638 20l-2.217 1.983h.099L18.5 22h-3.379l1.697-.009-2.267-.01L12.307 20h8.331zm1.119-1L25 16.1V8.009C25 7.452 24.545 7 24 7H9c-.552 0-1 .444-1 1.002V16.2l3.173 2.8h10.584zM13.09 6L16.5 3l3.41 3h4.093C25.109 6 26 6.895 26 8v3.36L29 14v14.006A2 2 0 0126.996 30H6.004A1.994 1.994 0 014 28.006V14l3-2.64V8c0-1.113.894-2 1.997-2h4.094zm5.337 0L16.5 4.3 14.572 6h3.856zM26 12.677L27.5 14 26 15.333v-2.656zM7 15.333L5.5 14 7 12.677v2.656zM13.5 23l-7 6h20l-7-6h-6zm14.185 5.725L20 22.017 28 15v13a.998.998 0 01-.315.725zm-22.37 0L13 22.017 5 15v13c0 .283.121.542.315.725zM10 10v1h13v-1H10zm0 3v1h13v-1H10zm0 3v1h13v-1H10z" fill="#6f6f6f" fill-rule="evenodd"/></svg>
+				<fieldset>
+					<legend>Absender</legend>
+					<label for="name">Vor- &amp; Nachname</label>
+					<input type="text" id="name" v-model="address_name" :placeholder="[[address_name]]" />
+					<label for="street">Straße</label>
+					<input type="text" id="street" v-model="address_street" :placeholder="[[address_street]]" />
+					<label for="city">Stadt</label>
+					<input type="text" id="city" v-model="address_city" :placeholder="[[address_city]]" />
+				</fieldset>
+				<fieldset>
+					<legend>Fußzeile anzeigen</legend>
+					<label class="switch" v-bind:class="{active:showFooter}"><input type="checkbox" v-model="showFooter" /><div></div></label>
+					<div class="config-footer" v-bind:class="{show:showFooter}">
+						<label for="mobile">Mail</label>
+						<input type="text" id="mail" v-model="mail" :placeholder="[[mail]]" />
+						<label for="mobile">Mobile</label>
+						<input type="text" id="mobile" v-model="mobile" :placeholder="[[mobile]]" />
+						<label for="web">Web</label>
+						<input type="text" id="web" v-model="web" :placeholder="[[web]]" />
+					</div>
+				</fieldset>
+				<p class="license">envelope icon by <a href="http://hawcons.com">hawcons.com</a></p>
+			</div>
+			<div id="workspace">
+				<div id="letter">
+					<header>
+						<div class="headline">
+							{{address_name}} &nbsp; · &nbsp; {{address_street}} &nbsp; · &nbsp; {{address_city}}
+						</div>
+						<div class="address">
+							<div class="from">
+								{{address_name}} · {{address_street}} · {{address_city}}
+							</div>
+							<div class="to" contenteditable="true" >
+								<div>Herr</div>
+								<div>Max Mustermann</div>
+								<div>Musterstraße 11</div>
+								<br/>
+								<div>12345 Musterstadt</div> 
+							</div>
+						</div>
+					</header>
+					<main>
+						<div class="subject">
+							<div contenteditable="true" class="subject-title">Betreff: Mein Schreiben, Zeichen foo/4711/123</div>
+							<div contenteditable="true" class="subject-date">{{date}}</div>
+						</div>
+						<div class="content">
+							<div contenteditable="true" class="letter-greeting">Sehr geehrte Damen und Herren,</div>
+							<div contenteditable="true" class="letter-content">{{content}}</div>
+							<closing :closing="closing" :name="address_name"></closing>
+							<div contenteditable="true">Anlagen:</div>
+						</div>
+					</main>
+					<footer v-bind:class="{show:showFooter}">
+						<div class="footer-list">
+							<div>{{address_name}}</div>
+							<div>{{address_street}}</div>
+							<div>{{address_city}}</div>
+						</div>
+						<div class="footer-list">
+							<div v-if='mobile.length'><label>Mobile:</label> {{mobile}}</div>
+							<div v-if='mail.length'><label>Email:</label> {{mail}}</div>
+							<div v-if='web.length'><label>Web:</label> {{web}}</div>
+						</div>
+					</footer>
+				</div>
+			</div>			
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
